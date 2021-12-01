@@ -1,0 +1,9 @@
+---
+- name: Cria politica
+  hosts: localhost
+  tasks:
+  - name: cria politica MFA
+    community.aws.iam_managed_policy:
+      policy_name: "POCPolicyMFA1"
+      policy: "{{ lookup('file', 'pocpolicymfa.json') }}"
+      state: present

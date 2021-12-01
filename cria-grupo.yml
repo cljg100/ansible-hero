@@ -1,0 +1,20 @@
+---
+- name: criacao de grupos
+  hosts: localhost
+  tasks:
+  - name: Cria grupo apoc_admin
+    iam_group:
+      name: "apoc_admin"
+      managed_policies:
+                - arn:aws:iam::aws:policy/IAMUserChangePassword
+                - arn:aws:iam::xxxxxxxxxx:policy/enforceMFApolicy
+                - arn:aws:iam::aws:policy/AdministratorAccess
+      state: present
+  - name: Cria grupo apoc_dba
+    iam_group:
+      name: "apoc_dba"
+      managed_policies:
+                - arn:aws:iam::aws:policy/IAMUserChangePassword
+                - arn:aws:iam::xxxxxxxxxx:policy/enforceMFApolicy
+                - arn:aws:iam::aws:policy/AmazonRDSFullAccess
+      state: present

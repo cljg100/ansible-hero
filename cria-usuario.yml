@@ -1,0 +1,24 @@
+---
+- name: criação de usuário
+  hosts: localhost
+  vars_files:
+    - ext_vars.yml
+  tasks:
+  - name: define arquivo csv
+    read_csv:
+     path: usuario.csv
+    register: user_list
+    delegate_to: localhost
+  - name: lista arquivo csv
+    debug:
+      msg: "{{ item.usuario }}"
+    loop: "{{ user_list.list }}"
+  - name: cria usuario
+    iam:
+      iam_type: user
+      name: "{{ item.usuario }}"
+      groups: "{{ item.grupo }}"
+      state: present
+      password: "{{ password_inicial }}"
+      access_key_state: create
+    loop: "{{ user_list.list }}" 

@@ -1,0 +1,12 @@
+---
+- name: delecao de grupos
+  hosts: localhost
+  tasks:
+  - name: deleta grupo apoc_admin
+    iam_group:
+      name: "apoc_admin"
+      state: absent
+  - name: deleta  grupo apoc_dba
+    iam_group:
+      name: "apoc_dba"
+      state: absent

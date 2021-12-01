@@ -1,0 +1,22 @@
+---
+- name: deleção de usuário
+  hosts: localhost
+  vars_files:
+    - ext_vars.yml
+  tasks:
+  - name: define arquivo usuario.csv para leitura
+    read_csv:
+     path: usuario.csv
+    register: user_list
+    delegate_to: localhost
+  - name: lista arquivo usuario.csv
+    debug:
+      msg: "{{ item.usuario }}"
+    loop: "{{ user_list.list }}"
+  - name: deleta usuarios da lista usuario.csv
+    iam:
+      iam_type: user
+      name: "{{ item.usuario }}"
+      groups: "{{ item.grupo }}"
+      state: absent
+    loop: "{{ user_list.list }}" 
